@@ -52,12 +52,37 @@ class Exon(GenomicFeature):
     def describe(self):
         return(
             f"{super().describe()}"
-            f"exon #{self.exon_number}"
+            f" exon #{self.exon_number}"
         )
 
 
 
 # =-=-=-=-=-=-=-= Task 3 =-=-=-=-=-=-=-=
+class Gene(GenomicFeature):
+    def __init__(self, chromosome, start, end, strand, name, exons):
+        super().__init__(chromosome, start, end, strand)
+        self.name = name
+        self.exons = []
+    def add_exon(self, exon):
+        self.exons.append(exon)
+
+    def total_exon_length(self):
+        return sum(exon.length() for exon in self.exons)
+
+    def describe(self):
+        return(
+            f"Gene {self.name}",
+            f"{self.chromosome}:{self.start}-{self.end}",
+            f"({self.strand}),"
+            f"{len(self.exons)} exon(s)"
+        )
+
+
+class Variant(GenomicFeature):
+    def __init__(self, chromosome, start, end, strand, ref_allele, alt_allele):
+        super().__init__(chromosome, start, end, strand)
+        self.ref_allele = ref_allele
+        self.alt_allele = alt_allele
 
 
 if __name__ == "__main__":
