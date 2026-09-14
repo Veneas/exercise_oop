@@ -44,7 +44,21 @@ class GenomicFeature:
 # =-=-=-=-=-=-=-= Task 2 =-=-=-=-=-=-=-=
 
 class Exon(GenomicFeature):
-    def __init__(self. chromosome, start, end, strand):
+    def __init__(self, chromosome, start, end, strand, exon_number):
+        super().__init__(chromosome, start, end, strand)
+        self.exon_number = exon_number
+
+    # Override
+    def describe(self):
+        return(
+            f"{super().describe()}"
+            f"exon #{self.exon_number}"
+        )
+
+
+
+# =-=-=-=-=-=-=-= Task 3 =-=-=-=-=-=-=-=
+
 
 if __name__ == "__main__":
     a = GenomicFeature("chr1", 1000, 5000, "+")
@@ -57,7 +71,16 @@ if __name__ == "__main__":
     print(a.overlaps(c))    # False (different chromosome) -> chr1 vs chr2
 
     # Raising Value error as the start > end
-    GenomicFeature("chr1", 5000, 1000, "+")
+    #GenomicFeature("chr1", 5000, 1000, "+")
+
+    features = [
+        GenomicFeature("chr1", 1000, 5000, "+"),
+        Exon("chr1", 1000, 1200, "+", 1),
+        Exon("chr1", 3000, 3300, "+", 2)
+    ]
+
+    for feature in features:
+        print(feature.describe())
 
 
 
